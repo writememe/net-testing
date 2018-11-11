@@ -1,13 +1,13 @@
 iosv-1#show run
 Building configuration...
 
-Current configuration : 1222 bytes
+Current configuration : 1479 bytes
 !
-! Last configuration change at 08:51:35 EET Sun Nov 11 2018
+! Last configuration change at 18:49:23 AEDT Sun Nov 11 2018 by admin
 !
 version 15.4
-service timestamps debug datetime msec
-service timestamps log datetime msec
+service timestamps debug datetime localtime show-timezone
+service timestamps log datetime localtime show-timezone
 service password-encryption
 service compress-config
 !
@@ -20,7 +20,8 @@ aqm-register-fnf
 !
 !
 no aaa new-model
-clock timezone EET 2 0
+clock timezone AEST 10 0
+clock summer-time AEDT recurring last Sun Oct 2:00 1 Sun Apr 3:00
 mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
@@ -51,6 +52,7 @@ multilink bundle-name authenticated
 !
 !
 username admin privilege 15 secret 5 $1$hY8s$8W6dMKojYh4VDGIGknR9x0
+username ansible privilege 15 secret 5 $1$OeCP$MlIDLtOrU6FRdXCbJB/ik/
 !
 redundancy
 !
@@ -95,6 +97,8 @@ ip access-list standard permit_snmp
 !
 !
 snmp-server community dfjt RO permit_snmp
+snmp-server location Virtual Environment
+snmp-server contact writememe
 !
 !
 control-plane
@@ -116,4 +120,4 @@ line vty 0 4
 !
 end
 
-iosv-1#exit
+iosv-1#
