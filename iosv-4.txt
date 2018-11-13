@@ -1,9 +1,9 @@
 iosv-4#show run
 Building configuration...
 
-Current configuration : 1477 bytes
+Current configuration : 1684 bytes
 !
-! Last configuration change at 18:49:27 AEDT Sun Nov 11 2018 by admin
+! Last configuration change at 19:41:50 AEDT Tue Nov 13 2018 by admin
 !
 version 15.4
 service config
@@ -41,6 +41,8 @@ mmi snmp-timeout 180
 !
 ip domain name lab.dfjt.local
 ip cef
+login on-failure log
+login on-success log
 no ipv6 cef
 !
 multilink bundle-name authenticated
@@ -52,6 +54,11 @@ multilink bundle-name authenticated
 !
 !
 !
+archive
+ log config
+  logging enable
+  notify syslog contenttype plaintext
+  hidekeys
 username admin privilege 15 secret 5 $1$ckbt$Wf2DNuPyqqww.DbjVjx9l/
 username ansible privilege 15 secret 5 $1$I2ro$1HTvolKPejd/BBWtaVfx2/
 !
@@ -59,7 +66,9 @@ redundancy
 !
 lldp run
 !
-! 
+ip ssh dh min size 2048
+ip scp server enable
+!
 !
 !
 !
@@ -73,6 +82,7 @@ lldp run
 !
 !
 interface Ethernet0/0
+ description Management Interface
  ip address 10.0.0.45 255.255.255.0
 !
 interface Ethernet0/1
